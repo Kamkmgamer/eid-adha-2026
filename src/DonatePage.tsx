@@ -141,6 +141,12 @@ function DonatePage() {
         </div>
         <h1>طرق التبرع</h1>
         <p>انسخ رقم الحساب ثم افتح التطبيق لإتمام التحويل</p>
+        <div className="shares-info">
+          <p>
+            <strong>قيمة السهم: 1000 جنيه</strong><br />
+            (السهمين بـ 2000 جنيه، وهكذا...)
+          </p>
+        </div>
       </header>
 
       {/* Payment methods */}

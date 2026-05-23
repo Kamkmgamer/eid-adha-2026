@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Moon,
   Star,
@@ -13,12 +13,18 @@ import {
   Crosshair,
   Eye,
   Lightbulb,
-} from 'lucide-react'
-import LoadingScreen from './LoadingScreen'
-import './App.css'
+} from "lucide-react";
+import LoadingScreen from "./LoadingScreen";
+import "./App.css";
 
 /** Custom mosque silhouette SVG — not in Lucide */
-function MosqueIcon({ size = 24, className }: { size?: number; className?: string }) {
+function MosqueIcon({
+  size = 24,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) {
   return (
     <svg
       className={className}
@@ -44,11 +50,17 @@ function MosqueIcon({ size = 24, className }: { size?: number; className?: strin
       {/* Door */}
       <path d="M10 20 Q12 16 14 20" />
     </svg>
-  )
+  );
 }
 
 /** Custom crescent-star for Islamic divider */
-function CrescentStarIcon({ size = 24, className }: { size?: number; className?: string }) {
+function CrescentStarIcon({
+  size = 24,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) {
   return (
     <svg
       className={className}
@@ -57,14 +69,23 @@ function CrescentStarIcon({ size = 24, className }: { size?: number; className?:
       viewBox="0 0 24 24"
       fill="currentColor"
     >
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c2.2 0 4.24-.72 5.9-1.94C15.68 18.92 14 16.14 14 13c0-4.42 3.58-8 8-8 .55 0 1.09.06 1.61.16C21.84 3.18 17.26 1 12 2z" opacity="0.9" />
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c2.2 0 4.24-.72 5.9-1.94C15.68 18.92 14 16.14 14 13c0-4.42 3.58-8 8-8 .55 0 1.09.06 1.61.16C21.84 3.18 17.26 1 12 2z"
+        opacity="0.9"
+      />
       <path d="M19 4l.72 1.45L21.2 6l-1.48.55L19 8l-.72-1.45L16.8 6l1.48-.55z" />
     </svg>
-  )
+  );
 }
 
 /** Custom sheep icon for floating decor */
-function SheepIconSmall({ size = 24, className }: { size?: number; className?: string }) {
+function SheepIconSmall({
+  size = 24,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) {
   return (
     <svg
       className={className}
@@ -77,100 +98,139 @@ function SheepIconSmall({ size = 24, className }: { size?: number; className?: s
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <ellipse cx="12" cy="13" rx="7" ry="5" fill="currentColor" opacity="0.1" stroke="currentColor" />
-      <circle cx="8" cy="11" r="2" fill="currentColor" opacity="0.15" stroke="currentColor" />
-      <circle cx="12" cy="10" r="2.5" fill="currentColor" opacity="0.15" stroke="currentColor" />
-      <circle cx="16" cy="11" r="2" fill="currentColor" opacity="0.15" stroke="currentColor" />
-      <ellipse cx="18" cy="10" rx="2.5" ry="2" fill="currentColor" opacity="0.1" stroke="currentColor" />
+      <ellipse
+        cx="12"
+        cy="13"
+        rx="7"
+        ry="5"
+        fill="currentColor"
+        opacity="0.1"
+        stroke="currentColor"
+      />
+      <circle
+        cx="8"
+        cy="11"
+        r="2"
+        fill="currentColor"
+        opacity="0.15"
+        stroke="currentColor"
+      />
+      <circle
+        cx="12"
+        cy="10"
+        r="2.5"
+        fill="currentColor"
+        opacity="0.15"
+        stroke="currentColor"
+      />
+      <circle
+        cx="16"
+        cy="11"
+        r="2"
+        fill="currentColor"
+        opacity="0.15"
+        stroke="currentColor"
+      />
+      <ellipse
+        cx="18"
+        cy="10"
+        rx="2.5"
+        ry="2"
+        fill="currentColor"
+        opacity="0.1"
+        stroke="currentColor"
+      />
       <circle cx="19" cy="9.5" r="0.5" fill="currentColor" />
       <line x1="9" y1="17" x2="9" y2="21" />
       <line x1="15" y1="17" x2="15" y2="21" />
     </svg>
-  )
+  );
 }
 
 const snarkMessages: { icon: React.ReactNode; text: string }[] = [
-  { icon: <Annoyed size={16} />, text: 'مش كدا يا حبيبي!' },
-  { icon: <SheepIconSmall size={16} />, text: 'الخروف بيقولك تبرع!' },
-  { icon: <SmilePlus size={16} />, text: 'ما تجرب تاني؟' },
-  { icon: <HandHeart size={16} />, text: 'الأجر عظيم يا صاحبي!' },
-  { icon: <Laugh size={16} />, text: 'الزر ده مش عايزك!' },
-  { icon: <SheepIconSmall size={16} />, text: 'مييييه! (يعني تبرع)' },
-  { icon: <Lightbulb size={16} />, text: 'جرب تضغط على الزر الأخضر بدل كدا' },
-  { icon: <Star size={16} />, text: 'ربنا يكرمك لو تبرعت!' },
-  { icon: <Eye size={16} />, text: 'الزر بيخاف منك!' },
-  { icon: <Crosshair size={16} />, text: 'هل تقدر تمسكه؟ (لا)' },
-]
+  { icon: <Annoyed size={16} />, text: "مش كدا يا حبيبي!" },
+  { icon: <SheepIconSmall size={16} />, text: "الخروف بيقولك تبرع!" },
+  { icon: <SmilePlus size={16} />, text: "ما تجرب تاني؟" },
+  { icon: <HandHeart size={16} />, text: "الأجر عظيم يا صاحبي!" },
+  { icon: <Laugh size={16} />, text: "الزر ده مش عايزك!" },
+  { icon: <SheepIconSmall size={16} />, text: "مييييه! (يعني تبرع)" },
+  { icon: <Lightbulb size={16} />, text: "جرب تضغط على الزر الأخضر بدل كدا" },
+  { icon: <Star size={16} />, text: "ربنا يكرمك لو تبرعت!" },
+  { icon: <Eye size={16} />, text: "الزر بيخاف منك!" },
+  { icon: <Crosshair size={16} />, text: "هل تقدر تمسكه؟ (لا)" },
+];
 
 function App() {
   const [loading, setLoading] = useState(() => {
-    return sessionStorage.getItem('hasSeenLoading') !== 'true'
-  })
-  const [snarkIndex, setSnarkIndex] = useState(-1)
+    return sessionStorage.getItem("hasSeenLoading") !== "true";
+  });
+  const [snarkIndex, setSnarkIndex] = useState(-1);
   const [nahStyle, setNahStyle] = useState<React.CSSProperties>({
-    left: '50%',
-    top: '0',
-    transform: 'translateX(-50%)',
-  })
-  const nahWrapperRef = useRef<HTMLDivElement>(null)
-  const navigate = useNavigate()
+    left: "50%",
+    top: "0",
+    transform: "translateX(-50%)",
+  });
+  const nahWrapperRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const handleLoadingComplete = useCallback(() => {
-    sessionStorage.setItem('hasSeenLoading', 'true')
-    setLoading(false)
-  }, [])
+    sessionStorage.setItem("hasSeenLoading", "true");
+    setLoading(false);
+  }, []);
 
-  const handleNahInteraction = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault()
-    const wrapper = nahWrapperRef.current
-    if (!wrapper) return
+  const handleNahInteraction = useCallback(
+    (e: React.MouseEvent | React.TouchEvent) => {
+      e.preventDefault();
+      const wrapper = nahWrapperRef.current;
+      if (!wrapper) return;
 
-    const btnWidth = 200
-    const btnHeight = 48
+      const btnWidth = 200;
+      const btnHeight = 48;
 
-    // Calculate random position within a wider viewport area
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
+      // Calculate random position within a wider viewport area
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
 
-    // Random position, but keep button partially visible
-    const maxX = viewportWidth - btnWidth - 20
-    const maxY = viewportHeight - btnHeight - 20
-    const randomX = Math.random() * maxX + 10
-    const randomY = Math.random() * (maxY - 100) + 50
+      // Random position, but keep button partially visible
+      const maxX = viewportWidth - btnWidth - 20;
+      const maxY = viewportHeight - btnHeight - 20;
+      const randomX = Math.random() * maxX + 10;
+      const randomY = Math.random() * (maxY - 100) + 50;
 
+      setNahStyle({
+        position: "fixed",
+        left: `${randomX}px`,
+        top: `${randomY}px`,
+        transform: "none",
+        zIndex: 100,
+      });
 
-    setNahStyle({
-      position: 'fixed',
-      left: `${randomX}px`,
-      top: `${randomY}px`,
-      transform: 'none',
-      zIndex: 100,
-    })
-
-    setSnarkIndex((prev) => {
-      let next = Math.floor(Math.random() * snarkMessages.length)
-      while (next === prev && snarkMessages.length > 1) {
-        next = Math.floor(Math.random() * snarkMessages.length)
-      }
-      return next
-    })
-  }, [])
+      setSnarkIndex((prev) => {
+        let next = Math.floor(Math.random() * snarkMessages.length);
+        while (next === prev && snarkMessages.length > 1) {
+          next = Math.floor(Math.random() * snarkMessages.length);
+        }
+        return next;
+      });
+    },
+    [],
+  );
 
   // Reset nah button position if user resizes
   useEffect(() => {
     const handleResize = () => {
       setNahStyle({
-        left: '50%',
-        top: '0',
-        transform: 'translateX(-50%)',
-      })
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+        left: "50%",
+        top: "0",
+        transform: "translateX(-50%)",
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   if (loading) {
-    return <LoadingScreen onComplete={handleLoadingComplete} />
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
 
   return (
@@ -182,11 +242,21 @@ function App() {
 
       {/* Floating decorations — Lucide icons */}
       <div className="floating-decor">
-        <span><Moon size={20} /></span>
-        <span><Star size={14} /></span>
-        <span><SheepIconSmall size={20} /></span>
-        <span><MosqueIcon size={18} /></span>
-        <span><Sparkles size={14} /></span>
+        <span>
+          <Moon size={20} />
+        </span>
+        <span>
+          <Star size={14} />
+        </span>
+        <span>
+          <SheepIconSmall size={20} />
+        </span>
+        <span>
+          <MosqueIcon size={18} />
+        </span>
+        <span>
+          <Sparkles size={14} />
+        </span>
       </div>
 
       {/* Main content */}
@@ -212,9 +282,11 @@ function App() {
         </p>
 
         <p className="greeting-message">
-          كل عام وأنتم بخير بمناسبة عيد الأضحى المبارك.
-          أعاده الله عليكم وعلى الأمة الإسلامية بالخير واليمن والبركات.
-          نسأل الله أن يتقبل منا ومنكم صالح الأعمال.
+          هذا الموقع مقدم لكم من الأمانة الماليه.
+          <br />
+          كل عام وأنتم بخير بمناسبة عيد الأضحى المبارك. أعاده الله عليكم وعلى
+          الأمة الإسلامية بالخير واليمن والبركات. نسأل الله أن يتقبل منا ومنكم
+          صالح الأعمال.
         </p>
 
         {/* Divider — custom crescent-star SVG */}
@@ -242,9 +314,13 @@ function App() {
               type="button"
               className="btn-donate"
               id="btn-donate-now"
-              onClick={() => navigate('/donate')}
+              onClick={() => navigate("/donate")}
             >
-              <Heart size={20} className="btn-donate-icon" fill="currentColor" />
+              <Heart
+                size={20}
+                className="btn-donate-icon"
+                fill="currentColor"
+              />
               تبرع الآن
             </button>
 
@@ -268,14 +344,16 @@ function App() {
           {/* Snark message */}
           {snarkIndex >= 0 && (
             <p className="snark-message" key={snarkIndex}>
-              <span className="snark-icon">{snarkMessages[snarkIndex].icon}</span>
+              <span className="snark-icon">
+                {snarkMessages[snarkIndex].icon}
+              </span>
               {snarkMessages[snarkIndex].text}
             </p>
           )}
         </section>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
