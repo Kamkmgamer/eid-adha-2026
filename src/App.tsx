@@ -331,7 +331,7 @@ function App() {
                 style={nahStyle}
                 onClick={handleNahInteraction}
               >
-                أستلم تبرع
+                ما حتبرع
                 <HandHeart size={16} />
               </button>
             </div>
