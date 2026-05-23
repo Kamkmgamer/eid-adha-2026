@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   HandHeart,
@@ -9,117 +9,119 @@ import {
   Store,
   ListOrdered,
   CircleCheck,
-} from 'lucide-react'
-import './DonatePage.css'
+} from "lucide-react";
+import "./DonatePage.css";
 
 interface Account {
-  label: string
-  number: string
-  name: string
+  label: string;
+  number: string;
+  name: string;
 }
 
 interface PaymentMethod {
-  id: string
-  title: string
-  titleAr: string
-  logoSrc: string
-  accounts: Account[]
-  appStoreUrl: string
-  playStoreUrl: string
-  instructions: string[]
+  id: string;
+  title: string;
+  titleAr: string;
+  logoSrc: string;
+  accounts: Account[];
+  appStoreUrl: string;
+  playStoreUrl: string;
+  instructions: string[];
 }
 
 const paymentMethods: PaymentMethod[] = [
   {
-    id: 'bankak',
-    title: 'Bankak',
-    titleAr: 'بنكك',
-    logoSrc: '/بنكك.png',
+    id: "bankak",
+    title: "Bankak",
+    titleAr: "بنكك",
+    logoSrc: "/بنكك.png",
     accounts: [
       {
-        label: 'رقم الحساب',
-        number: '1234567890123',
-        name: 'محمد أحمد عبدالله',
+        label: "رقم الحساب",
+        number: "1554770",
+        name: "عفاف محمد عباس موسى",
       },
     ],
-    appStoreUrl: 'https://apps.apple.com/app/bankak/id1510363547',
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.bok.bankak',
+    appStoreUrl: "https://apps.apple.com/app/bankak/id1510363547",
+    playStoreUrl:
+      "https://play.google.com/store/apps/details?id=com.bok.bankak",
     instructions: [
-      'انسخ رقم الحساب أعلاه',
-      'افتح تطبيق بنكك',
+      "انسخ رقم الحساب أعلاه",
+      "افتح تطبيق بنكك",
       'اختر "تحويل" من القائمة الرئيسية',
-      'الصق رقم الحساب وأدخل المبلغ',
-      'أكد التحويل',
+      "الصق رقم الحساب وأدخل المبلغ",
+      "أكد التحويل",
     ],
   },
   {
-    id: 'fawry',
-    title: 'Fawry',
-    titleAr: 'فوري',
-    logoSrc: '/فوري.png',
+    id: "fawry",
+    title: "Fawry",
+    titleAr: "فوري",
+    logoSrc: "/فوري.png",
     accounts: [
       {
-        label: 'رقم الحساب',
-        number: '9876543210987',
-        name: 'محمد أحمد عبدالله',
+        label: "رقم الحساب",
+        number: "51845741",
+        name: "نون احمد محمد",
       },
     ],
-    appStoreUrl: 'https://apps.apple.com/app/fawry-sd/id1529280558',
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.fib.fawrysd',
+    appStoreUrl: "https://apps.apple.com/app/fawry-sd/id1529280558",
+    playStoreUrl:
+      "https://play.google.com/store/apps/details?id=com.fib.fawrysd",
     instructions: [
-      'انسخ رقم الحساب أعلاه',
-      'افتح تطبيق فوري',
+      "انسخ رقم الحساب أعلاه",
+      "افتح تطبيق فوري",
       'اختر "تحويل إلى حساب"',
-      'الصق رقم الحساب وحدد المبلغ',
-      'أكد عملية التحويل',
+      "الصق رقم الحساب وحدد المبلغ",
+      "أكد عملية التحويل",
     ],
   },
-]
+];
 
 function DonatePage() {
-  const navigate = useNavigate()
-  const [copiedId, setCopiedId] = useState<string | null>(null)
-  const [toast, setToast] = useState<string | null>(null)
-  const [toastExiting, setToastExiting] = useState(false)
+  const navigate = useNavigate();
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [toastExiting, setToastExiting] = useState(false);
 
   const copyToClipboard = useCallback(async (text: string, id: string) => {
     try {
-      await navigator.clipboard.writeText(text)
-      setCopiedId(id)
-      showToast('تم نسخ رقم الحساب')
-      setTimeout(() => setCopiedId(null), 2500)
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      showToast("تم نسخ رقم الحساب");
+      setTimeout(() => setCopiedId(null), 2500);
     } catch {
       // Fallback for older browsers
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      setCopiedId(id)
-      showToast('تم نسخ رقم الحساب')
-      setTimeout(() => setCopiedId(null), 2500)
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      setCopiedId(id);
+      showToast("تم نسخ رقم الحساب");
+      setTimeout(() => setCopiedId(null), 2500);
     }
-  }, [])
+  }, []);
 
   const showToast = useCallback((message: string) => {
-    setToastExiting(false)
-    setToast(message)
-  }, [])
+    setToastExiting(false);
+    setToast(message);
+  }, []);
 
   useEffect(() => {
-    if (!toast) return
+    if (!toast) return;
     const timer = setTimeout(() => {
-      setToastExiting(true)
+      setToastExiting(true);
       setTimeout(() => {
-        setToast(null)
-        setToastExiting(false)
-      }, 300)
-    }, 2200)
-    return () => clearTimeout(timer)
-  }, [toast])
+        setToast(null);
+        setToastExiting(false);
+      }, 300);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   return (
     <div className="donate-page">
@@ -128,7 +130,7 @@ function DonatePage() {
         <button
           type="button"
           className="donate-back"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
         >
           <ArrowRight size={16} />
           رجوع
@@ -138,9 +140,7 @@ function DonatePage() {
           <HandHeart size={40} strokeWidth={1.5} />
         </div>
         <h1>طرق التبرع</h1>
-        <p>
-          انسخ رقم الحساب ثم افتح التطبيق لإتمام التحويل
-        </p>
+        <p>انسخ رقم الحساب ثم افتح التطبيق لإتمام التحويل</p>
       </header>
 
       {/* Payment methods */}
@@ -164,8 +164,8 @@ function DonatePage() {
 
             {/* Accounts */}
             {method.accounts.map((account, idx) => {
-              const accountId = `${method.id}-${idx}`
-              const isCopied = copiedId === accountId
+              const accountId = `${method.id}-${idx}`;
+              const isCopied = copiedId === accountId;
               return (
                 <div key={accountId} className="account-row">
                   <div className="account-info">
@@ -175,7 +175,7 @@ function DonatePage() {
                   </div>
                   <button
                     type="button"
-                    className={`btn-copy${isCopied ? ' copied' : ''}`}
+                    className={`btn-copy${isCopied ? " copied" : ""}`}
                     onClick={() => copyToClipboard(account.number, accountId)}
                   >
                     {isCopied ? (
@@ -191,7 +191,7 @@ function DonatePage() {
                     )}
                   </button>
                 </div>
-              )
+              );
             })}
 
             {/* App links */}
@@ -234,9 +234,7 @@ function DonatePage() {
 
       {/* Footer */}
       <footer className="donate-footer">
-        <p className="donate-dua">
-          جزاكم الله خيراً وبارك الله فيكم
-        </p>
+        <p className="donate-dua">جزاكم الله خيراً وبارك الله فيكم</p>
         <p className="donate-footer-sub">
           <HandHeart size={14} className="footer-icon" />
           تقبل الله منا ومنكم صالح الأعمال
@@ -245,13 +243,13 @@ function DonatePage() {
 
       {/* Toast */}
       {toast && (
-        <div className={`toast${toastExiting ? ' toast-exit' : ''}`}>
+        <div className={`toast${toastExiting ? " toast-exit" : ""}`}>
           <CircleCheck size={16} />
           {toast}
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default DonatePage
+export default DonatePage;
