@@ -1,0 +1,399 @@
+/* ============================================
+   DONATE PAGE
+   Payment methods with copiable account
+   numbers and app deep links.
+   ============================================ */
+
+.donate-page {
+  min-height: 100dvh;
+  position: relative;
+  background: var(--earth-900);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.donate-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, oklch(0.48 0.10 150 / 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, oklch(0.68 0.16 68 / 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* — Header — */
+.donate-header {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-8) var(--space-6) var(--space-6);
+  text-align: center;
+}
+
+.donate-back {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--earth-400);
+  background: var(--earth-800);
+  border: 1px solid var(--earth-700);
+  border-radius: var(--radius-md);
+  z-index: 10;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.donate-back:hover {
+  color: var(--gold-300);
+  border-color: var(--gold-500);
+}
+
+.donate-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-300);
+  margin-bottom: var(--space-3);
+  animation: scaleIn 0.6s var(--ease-out-expo) forwards;
+}
+
+.donate-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  color: var(--gold-200);
+  margin-bottom: var(--space-2);
+  animation: fadeInUp 0.6s var(--ease-out-expo) 0.1s forwards;
+  opacity: 0;
+}
+
+.donate-header p {
+  font-size: 0.95rem;
+  color: var(--earth-400);
+  max-width: 45ch;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s var(--ease-out-expo) 0.2s forwards;
+  opacity: 0;
+}
+
+/* — Payment methods container — */
+.payment-methods {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-6) var(--space-12);
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* — Payment card — */
+.payment-card {
+  background: oklch(0.18 0.01 65);
+  border: 1px solid var(--earth-700);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  animation: fadeInUp 0.7s var(--ease-out-expo) forwards;
+  opacity: 0;
+  transition: border-color 0.3s ease;
+}
+
+.payment-card:nth-child(1) { animation-delay: 0.3s; }
+.payment-card:nth-child(2) { animation-delay: 0.5s; }
+
+.payment-card:hover {
+  border-color: var(--earth-600);
+}
+
+.payment-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.payment-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.payment-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.payment-card-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.payment-card-subtitle {
+  font-size: 0.8rem;
+  color: var(--earth-500);
+  margin-top: var(--space-1);
+}
+
+/* — Account row — */
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--earth-800);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.account-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  flex: 1;
+}
+
+.account-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--earth-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.account-number {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--gold-200);
+  direction: ltr;
+  text-align: right;
+  word-break: break-all;
+}
+
+.account-name {
+  font-size: 0.85rem;
+  color: var(--earth-300);
+}
+
+/* — Copy button — */
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--earth-400);
+  background: var(--earth-700);
+  border: 1px solid var(--earth-600);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn-copy:hover {
+  color: var(--gold-300);
+  background: var(--earth-600);
+  border-color: var(--gold-500);
+}
+
+.btn-copy.copied {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+/* — Open app button — */
+
+.app-store-links {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.app-store-link {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--earth-400);
+  background: var(--earth-700);
+  border: 1px solid var(--earth-600);
+  border-radius: var(--radius-md);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.app-store-link:hover {
+  color: var(--gold-300);
+  border-color: var(--gold-500);
+}
+
+/* — Instructions note — */
+.instructions-note {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  background: oklch(0.22 0.02 65);
+  border-radius: var(--radius-md);
+}
+
+.instructions-note h3 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold-300);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.instructions-note ol {
+  padding-right: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.instructions-note li {
+  font-size: 0.85rem;
+  color: var(--earth-300);
+  line-height: 1.6;
+}
+
+/* — Footer dua — */
+.donate-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--space-8) var(--space-6) var(--space-10);
+  margin-top: auto;
+}
+
+.donate-dua {
+  font-family: 'Amiri', serif;
+  font-size: 1.1rem;
+  color: var(--gold-400);
+  line-height: 1.8;
+}
+
+.donate-footer-sub {
+  font-size: 0.85rem;
+  color: var(--earth-500);
+  margin-top: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footer-icon {
+  flex-shrink: 0;
+}
+
+/* — Toast notification — */
+.toast {
+  position: fixed;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cream);
+  background: var(--emerald-500);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  opacity: 0;
+  animation: toastIn 0.4s var(--ease-out-expo) forwards;
+}
+
+.toast.toast-exit {
+  animation: toastOut 0.3s var(--ease-out-expo) forwards;
+}
+
+@keyframes toastIn {
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+/* — Responsive — */
+@media (max-width: 480px) {
+  .donate-header {
+    padding: var(--space-16) var(--space-4) var(--space-4);
+  }
+
+  .donate-back {
+    top: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .payment-methods {
+    padding: var(--space-3) var(--space-4) var(--space-8);
+  }
+
+  .payment-card {
+    padding: var(--space-4);
+  }
+
+  .account-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .btn-copy {
+    align-self: flex-start;
+  }
+
+  .app-store-links {
+    flex-direction: column;
+  }
+}
