@@ -43,7 +43,7 @@ function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [exiting, setExiting] = useState(false)
 
   useEffect(() => {
-    const duration = 5000
+    const duration = 1000
     const interval = 50
     const step = (interval / duration) * 100
     let current = 0

@@ -272,6 +272,15 @@
   color: var(--earth-400);
 }
 
+.btn-nah--glitch {
+  animation: glitchShake 0.42s steps(2, end);
+  color: oklch(0.78 0.16 25);
+  border-color: oklch(0.65 0.18 25);
+  text-shadow:
+    2px 0 oklch(0.7 0.19 25 / 0.8),
+    -2px 0 oklch(0.78 0.14 210 / 0.75);
+}
+
 /* — Snark message — */
 .snark-message {
   margin-top: var(--space-4);
@@ -283,6 +292,27 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+}
+
+.snark-message::before {
+  content: "خطأ";
+  padding: 0.12rem 0.35rem;
+  border: 1px solid oklch(0.65 0.18 25 / 0.65);
+  border-radius: var(--radius-sm);
+  color: oklch(0.78 0.16 25);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+@keyframes glitchShake {
+  0% { transform: translateX(-50%) translate(0, 0) skewX(0deg); }
+  12% { transform: translateX(-50%) translate(-5px, 2px) skewX(8deg); }
+  24% { transform: translateX(-50%) translate(4px, -2px) skewX(-7deg); }
+  36% { transform: translateX(-50%) translate(-3px, -1px) skewX(5deg); }
+  48% { transform: translateX(-50%) translate(6px, 1px) skewX(-9deg); }
+  60% { transform: translateX(-50%) translate(-2px, 3px) skewX(4deg); }
+  72% { transform: translateX(-50%) translate(3px, -3px) skewX(-5deg); }
+  100% { transform: translateX(-50%) translate(0, 0) skewX(0deg); }
 }
 
 .snark-icon {

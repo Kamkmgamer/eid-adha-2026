@@ -6,7 +6,6 @@ import {
   Sparkles,
   Heart,
   HandHeart,
-  X,
   Annoyed,
   Laugh,
   SmilePlus,
@@ -148,16 +147,16 @@ function SheepIconSmall({
 }
 
 const snarkMessages: { icon: React.ReactNode; text: string }[] = [
-  { icon: <Annoyed size={16} />, text: "مش كدا يا حبيبي!" },
-  { icon: <SheepIconSmall size={16} />, text: "الخروف بيقولك تبرع!" },
-  { icon: <SmilePlus size={16} />, text: "ما تجرب تاني؟" },
-  { icon: <HandHeart size={16} />, text: "الأجر عظيم يا صاحبي!" },
-  { icon: <Laugh size={16} />, text: "الزر ده مش عايزك!" },
-  { icon: <SheepIconSmall size={16} />, text: "مييييه! (يعني تبرع)" },
-  { icon: <Lightbulb size={16} />, text: "جرب تضغط على الزر الأخضر بدل كدا" },
-  { icon: <Star size={16} />, text: "ربنا يكرمك لو تبرعت!" },
-  { icon: <Eye size={16} />, text: "الزر بيخاف منك!" },
-  { icon: <Crosshair size={16} />, text: "هل تقدر تمسكه؟ (لا)" },
+  { icon: <Annoyed size={16} />, text: "٤٠٤:ما لقينا قروش" },
+  { icon: <SheepIconSmall size={16} />, text: "خطأ ٤٠٤: التبرع ما وصل" },
+  { icon: <SmilePlus size={16} />, text: "الرصيد ما بكفي يا زول" },
+  { icon: <HandHeart size={16} />, text: "العملية وقفت: دايرة كرم شوية" },
+  { icon: <Laugh size={16} />, text: "البوابة قالت: محاولة ظريفة" },
+  { icon: <SheepIconSmall size={16} />, text: "٤٠٤: محفظة الخروف فاضية" },
+  { icon: <Lightbulb size={16} />, text: "النظام بنصحك تضغط زر التبرع" },
+  { icon: <Star size={16} />, text: "الرصيد مختفي، البركة في الطريق" },
+  { icon: <Eye size={16} />, text: "تنبيه: عايز تستلم قبل ما تدفع؟" },
+  { icon: <Crosshair size={16} />, text: "آخر محاولاتك قربت تخلص" },
 ];
 
 function App() {
@@ -165,6 +164,8 @@ function App() {
     return sessionStorage.getItem("hasSeenLoading") !== "true";
   });
   const [snarkIndex, setSnarkIndex] = useState(-1);
+  const [nahClickCount, setNahClickCount] = useState(0);
+  const [glitchKey, setGlitchKey] = useState(0);
   const [nahStyle, setNahStyle] = useState<React.CSSProperties>({
     left: "50%",
     top: "0",
@@ -184,25 +185,17 @@ function App() {
       const wrapper = nahWrapperRef.current;
       if (!wrapper) return;
 
-      const btnWidth = 200;
-      const btnHeight = 48;
+      const nextCount = nahClickCount + 1;
+      setNahClickCount(nextCount);
+      setGlitchKey((prev) => prev + 1);
 
-      // Calculate random position within a wider viewport area
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-
-      // Random position, but keep button partially visible
-      const maxX = viewportWidth - btnWidth - 20;
-      const maxY = viewportHeight - btnHeight - 20;
-      const randomX = Math.random() * maxX + 10;
-      const randomY = Math.random() * (maxY - 100) + 50;
+      const randomX = Math.round(Math.random() * 330 - 110);
+      const randomY = Math.round(Math.random() * 110 - 50);
 
       setNahStyle({
-        position: "fixed",
-        left: `${randomX}px`,
+        left: `calc(50% + ${randomX}px)`,
         top: `${randomY}px`,
-        transform: "none",
-        zIndex: 100,
+        transform: "translateX(-50%)",
       });
 
       setSnarkIndex((prev) => {
@@ -212,8 +205,12 @@ function App() {
         }
         return next;
       });
+
+      if (nextCount >= 5) {
+        window.setTimeout(() => navigate("/donate"), 450);
+      }
     },
-    [],
+    [nahClickCount, navigate],
   );
 
   // Reset nah button position if user resizes
@@ -327,16 +324,15 @@ function App() {
             {/* Trickster button */}
             <div className="btn-nah-wrapper" ref={nahWrapperRef}>
               <button
+                key={glitchKey}
                 type="button"
-                className="btn-nah"
+                className={`btn-nah${glitchKey > 0 ? " btn-nah--glitch" : ""}`}
                 id="btn-no-donate"
                 style={nahStyle}
                 onClick={handleNahInteraction}
-                onMouseEnter={handleNahInteraction}
-                onTouchStart={handleNahInteraction}
               >
-                لا أريد التبرع
-                <X size={16} />
+                أستلم تبرع
+                <HandHeart size={16} />
               </button>
             </div>
           </div>
