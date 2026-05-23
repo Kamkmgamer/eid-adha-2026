@@ -6,7 +6,6 @@ import {
   Copy,
   Check,
   Smartphone,
-  Store,
   ListOrdered,
   CircleCheck,
 } from "lucide-react";
@@ -24,8 +23,7 @@ interface PaymentMethod {
   titleAr: string;
   logoSrc: string;
   accounts: Account[];
-  appStoreUrl: string;
-  playStoreUrl: string;
+  appUrl: string;
   instructions: string[];
 }
 
@@ -42,9 +40,7 @@ const paymentMethods: PaymentMethod[] = [
         name: "عفاف محمد عباس موسى",
       },
     ],
-    appStoreUrl: "https://apps.apple.com/app/bankak/id1510363547",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.bok.bankak",
+    appUrl: "bankak://",
     instructions: [
       "انسخ رقم الحساب أعلاه",
       "افتح تطبيق بنكك",
@@ -65,9 +61,7 @@ const paymentMethods: PaymentMethod[] = [
         name: "نون احمد محمد",
       },
     ],
-    appStoreUrl: "https://apps.apple.com/app/fawry-sd/id1529280558",
-    playStoreUrl:
-      "https://play.google.com/store/apps/details?id=com.fib.fawrysd",
+    appUrl: "fawry://",
     instructions: [
       "انسخ رقم الحساب أعلاه",
       "افتح تطبيق فوري",
@@ -83,6 +77,11 @@ function DonatePage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [toastExiting, setToastExiting] = useState(false);
+
+  const showToast = useCallback((message: string) => {
+    setToastExiting(false);
+    setToast(message);
+  }, []);
 
   const copyToClipboard = useCallback(async (text: string, id: string) => {
     try {
@@ -104,12 +103,7 @@ function DonatePage() {
       showToast("تم نسخ رقم الحساب");
       setTimeout(() => setCopiedId(null), 2500);
     }
-  }, []);
-
-  const showToast = useCallback((message: string) => {
-    setToastExiting(false);
-    setToast(message);
-  }, []);
+  }, [showToast]);
 
   useEffect(() => {
     if (!toast) return;
@@ -203,22 +197,12 @@ function DonatePage() {
             {/* App links */}
             <div className="app-store-links">
               <a
-                href={method.playStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={method.appUrl}
                 className="app-store-link"
+                aria-label={`افتح تطبيق ${method.titleAr}`}
               >
                 <Smartphone size={14} />
-                Google Play
-              </a>
-              <a
-                href={method.appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="app-store-link"
-              >
-                <Store size={14} />
-                App Store
+                فتح تطبيق {method.titleAr}
               </a>
             </div>
 
