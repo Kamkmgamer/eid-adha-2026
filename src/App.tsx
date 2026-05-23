@@ -7,13 +7,11 @@ import {
   Heart,
   HandHeart,
   X,
-  Frown,
   Annoyed,
   Laugh,
   SmilePlus,
   Crosshair,
   Eye,
-  ShieldAlert,
   Lightbulb,
 } from 'lucide-react'
 import LoadingScreen from './LoadingScreen'
@@ -127,7 +125,6 @@ function App() {
     const wrapper = nahWrapperRef.current
     if (!wrapper) return
 
-    const rect = wrapper.getBoundingClientRect()
     const btnWidth = 200
     const btnHeight = 48
 
@@ -141,9 +138,6 @@ function App() {
     const randomX = Math.random() * maxX + 10
     const randomY = Math.random() * (maxY - 100) + 50
 
-    // Convert to position relative to wrapper
-    const offsetX = randomX - rect.left
-    const offsetY = randomY - rect.top
 
     setNahStyle({
       position: 'fixed',
